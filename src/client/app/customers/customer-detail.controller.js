@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -20,7 +20,7 @@
         activate();
 
         function activate() {
-            return getCustomer($stateParams.id).then(function() {
+            return getCustomer($stateParams.id).then(function () {
                 logger.info('Activated Customer Detail View');
             });
         }
@@ -30,7 +30,7 @@
         }
 
         function getCustomer(id) {
-            return dataservice.getCustomer(id).then(function(data) {
+            return dataservice.getCustomer(id).then(function (data) {
                 vm.customer = data;
                 vm.original = angular.copy(vm.customer);
                 return vm.customer;

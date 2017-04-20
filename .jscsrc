@@ -39,34 +39,32 @@
     ],
     "requireSpaceBeforeBinaryOperators": [
         "=", "+=", "-=", "*=", "/=", "%=", "<<=", ">>=", ">>>=",
-        "&=", "|=", "^=", "+=",
-
+        "&=", "|=", "^=",
         "+", "-", "*", "/", "%", "<<", ">>", ">>>", "&",
         "|", "^", "&&", "||", "===", "==", ">=",
         "<=", "<", ">", "!=", "!=="
     ],
-    "requireSpaceAfterBinaryOperators": true,
-    "requireSpacesInConditionalExpression": true,
-    "requireSpaceBeforeBlockStatements": true,
-    "requireLineFeedAtFileEnd": true,
-    "disallowSpacesInsideObjectBrackets": "all",
-    "disallowSpacesInsideArrayBrackets": "all",
-    "disallowSpacesInsideParentheses": true,
+    "requireSpaceAfterBinaryOperators": false,
+    "requireSpacesInConditionalExpression": false,
+    "requireSpaceBeforeBlockStatements": false,
+    "requireLineFeedAtFileEnd": false,
+    "disallowSpacesInsideObjectBrackets": false,
+    "disallowSpacesInsideArrayBrackets": false,
+    "disallowSpacesInsideParentheses": false,
 
     "validateJSDoc": {
         "checkParamNames": true,
         "requireParamTypes": true
     },
 
-    "disallowMultipleLineBreaks": true,
+    "disallowMultipleLineBreaks": false,
 
     "disallowCommaBeforeLineBreak": null,
     "disallowDanglingUnderscores": null,
     "disallowEmptyBlocks": null,
-    "disallowMultipleLineStrings": null,
     "disallowTrailingComma": null,
     "requireCommaBeforeLineBreak": null,
     "requireDotNotation": null,
     "requireMultipleVarDecl": null,
-    "requireParenthesesAroundIIFE": true
+    "requireParenthesesAroundIIFE": false
 }
