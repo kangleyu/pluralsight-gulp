@@ -21,6 +21,7 @@ gulp.task('styles', ['clean-styles'], function() {
 
     return gulp.src(config.less)
         .pipe($.less())
+        .on('error', errorLogger)
         .pipe($.autoprefixer({ brosers: ['last 2 version', '> 5%']}))
         .pipe(gulp.dest(config.temp));
 });
@@ -35,6 +36,13 @@ gulp.task('less-watcher', function() {
 });
 
 //////// help functions
+
+function errorLogger(error) {
+    log('*** Start of Error ***');
+    log(error);
+    log('*** End of Error ***');
+    this.emit('end');
+}
 
 function clean(path, done) {
     log('Cleaning: ' + $.util.colors.blue(path));
