@@ -18,6 +18,7 @@ module.exports = function() {
         css: temp + 'styles.css',
         fonts: './bower_components/font-awesome/fonts/**/*.*',
         images: client + 'images/**/*.*',
+        htmltemplates: clientApp + '**/*.html',
         js: [
             clientApp + '**/*.module.js',
             clientApp + '**/*.js',
@@ -27,6 +28,18 @@ module.exports = function() {
         server: server,
         temp: temp,
         browserReloadDelay: 1000,
+
+        /**
+         * template cahce
+         */
+        templateCache: {
+            files: 'templates.js',
+            options: {
+                module: 'app.core',
+                standAlone: false,
+                root: 'app/'
+            }
+        },
 
         /**
          * Bower and NPM locations
