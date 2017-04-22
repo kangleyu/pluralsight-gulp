@@ -135,6 +135,8 @@ gulp.task('optimize', ['inject'], function () {
         .pipe(assets.restore())
         .pipe($.useref())
         .pipe($.revReplace())
+        .pipe(gulp.dest(config.build))
+        .pipe($.rev.manifest())
         .pipe(gulp.dest(config.build));
 });
 
