@@ -111,7 +111,8 @@ gulp.task('optimize', ['inject'], function () {
 
     var templateCache = config.temp + config.templateCache.file;
     var cssFilter = $.filter('**/*.css', { restore: true });
-    var jsFilter = $.filter('**/*.js', { restore: true });
+    var jsLibFilter = $.filter('**/lib.js', { restore: true });
+    var jsAppFilter = $.filter('**/app.js', { restore: true });
 
     return gulp.src(config.index)
         .pipe($.plumber())
@@ -122,9 +123,13 @@ gulp.task('optimize', ['inject'], function () {
         .pipe(cssFilter)
         .pipe($.csso())
         .pipe(cssFilter.restore)
-        .pipe(jsFilter)
+        .pipe(jsLibFilter)
         .pipe($.uglify())
-        .pipe(jsFilter.restore)
+        .pipe(jsLibFilter.restore)
+        .pipe(jsAppFilter)
+        .pipe($.ngAnnotate())
+        .pipe($.uglify())
+        .pipe(jsAppFilter.restore)
         .pipe(gulp.dest(config.build));
 });
 
