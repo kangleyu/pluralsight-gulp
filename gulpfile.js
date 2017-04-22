@@ -44,9 +44,22 @@ gulp.task('images', function() {
         .pipe(gulp.dest(config.build + 'images'));
 });
 
+gulp.task('clean', function(done) {
+    var delconfig = [config.build, config.temp];
+    log('Cleaning: ' + $.util.colors.blue(delconfig));
+    del(delconfig, done);
+});
+
 gulp.task('clean-styles', function(done) {
-    var files = config.temp + '**/*.css';
-    clean(files, done);
+    clean(config.temp + '**/*.css', done);
+});
+
+gulp.task('clean-fonts', function(done) {
+    clean(config.build + 'fonts/**/*.*', done);
+});
+
+gulp.task('clean-images', function(done) {
+    clean(config.build + 'images/**/*.*', done);
 });
 
 gulp.task('less-watcher', function() {
