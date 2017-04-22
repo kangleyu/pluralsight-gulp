@@ -33,7 +33,7 @@ module.exports = function() {
          * template cahce
          */
         templateCache: {
-            files: 'templates.js',
+            file: 'templates.js',
             options: {
                 module: 'app.core',
                 standAlone: false,
