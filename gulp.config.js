@@ -31,6 +31,14 @@ module.exports = function() {
         browserReloadDelay: 1000,
 
         /**
+         * optimized files
+         */
+        optimized: {
+            lib: 'lib.js',
+            app: 'app.js'
+        },
+
+        /**
          * template cahce
          */
         templateCache: {

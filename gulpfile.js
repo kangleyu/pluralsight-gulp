@@ -111,8 +111,8 @@ gulp.task('optimize', ['inject'], function () {
 
     var templateCache = config.temp + config.templateCache.file;
     var cssFilter = $.filter('**/*.css', { restore: true });
-    var jsLibFilter = $.filter('**/lib.js', { restore: true });
-    var jsAppFilter = $.filter('**/app.js', { restore: true });
+    var jsLibFilter = $.filter('**/' + config.optimized.lib, { restore: true });
+    var jsAppFilter = $.filter('**/' + config.optimized.app, { restore: true });
 
     return gulp.src(config.index)
         .pipe($.plumber())
