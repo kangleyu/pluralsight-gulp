@@ -99,7 +99,7 @@ function changeEvent(event) {
 }
 
 function startBrowserSync() {
-    if (browserSync.active) {
+    if (args.nosync || browserSync.active) {
         return;
     }
     log('Starting browser-sync on port' + port);
