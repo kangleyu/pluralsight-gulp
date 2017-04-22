@@ -113,9 +113,10 @@ gulp.task('optimize', ['inject'], function() {
 
     return gulp.src(config.index)
         .pipe($.plumber())
-        .pipe($.inject(gulp.src(templateCache, { read: false }, {
+        .pipe($.inject(gulp.src(templateCache, { read: false }), {
             starttag: '<!-- inject:templates:js -->'
-        })))
+        }))
+        .pipe($.useref({ searchPath: './' }))
         .pipe(gulp.dest(config.build));
 });
 
