@@ -22,3 +22,8 @@ $ bower install
 $ npm start
 ```
 
+## Run Production Build
+```bash
+$ NODE_ENV=build node src/server/app.js
+```
+
