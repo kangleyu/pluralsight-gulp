@@ -88,15 +88,30 @@ gulp.task('serve-dev', ['inject'], function() {
 
 //////// help functions
 
+function changeEvent(event) {
+    var srcPattern = new RegExp('/.*(?=/' + config.source + ')/');
+    log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
+}
+
 function startBrowserSync() {
     if (browserSync.active) {
         return;
     }
     log('Starting browser-sync on port' + port);
+
+    gulp.watch([config.less], ['styles'])
+        .on('change', function(event) {
+            changeEvent(event);
+        });
+
     var options = {
         proxy: 'localhost:' + port,
         port: 3000,
-        files: [config.client + '**/*.*'],
+        files: [
+            config.client + '**/*.*',
+            '!' + config.less, // don't monitor less files
+            config.temp + '**/*.css'
+        ],
         ghostMode: {
             click: true,
             location: true,
