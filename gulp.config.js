@@ -3,6 +3,7 @@ module.exports = function() {
     var clientApp = client + 'app/';
     var temp = './.tmp/';
     var server = './src/server/'
+    var root = './';
 
     var config ={
         /**
@@ -28,6 +29,7 @@ module.exports = function() {
         less: client + 'styles/styles.less',
         server: server,
         temp: temp,
+        root: root,
         browserReloadDelay: 1000,
 
         /**
@@ -58,6 +60,10 @@ module.exports = function() {
             directory: './bower_components/',
             ignorePath: '../..'
         },
+        packages: [
+            './package.json',
+            './bower.json'
+        ],
 
         /**
          * Node settings
