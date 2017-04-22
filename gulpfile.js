@@ -72,6 +72,11 @@ gulp.task('serve-dev', ['inject'], function() {
         .on('restart', ['vet'], function(ev) {
             log('*** nodemon restarted');
             log('files changed on restart: \n' + ev);
+            // why we delay for the browser sync? we need to start the server first
+            setTimeout(function() {
+                browserSync.notify('reloading now ...');
+                browserSync.reload({ stream: false });
+            }, config.browserReloadDelay);
         })
         .on('start', function() {
             log('*** nodemon started');
