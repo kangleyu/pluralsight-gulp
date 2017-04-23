@@ -195,6 +195,10 @@ gulp.task('test', ['vet', 'templatecache'], function(done) {
     startTests(true /* single run*/, done);
 });
 
+gulp.task('autotest', ['vet', 'templatecache'], function(done) {
+    startTests(false /* single run*/, done);
+});
+
 //////// help functions
 
 function startTests(singleRun, done) {
