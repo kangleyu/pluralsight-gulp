@@ -121,10 +121,17 @@ gulp.task('build', ['optimize', 'images', 'fonts'], function() {
     notify(msg);
 });
 
+gulp.task('serve-specs', ['build-specs'], function() {
+    log('run the spec runner');
+    serve(true, /* isDev */ true /* specRunner */);
+    done();
+});
+
 gulp.task('build-specs', ['templatecache'], function() {
     log('building the spec runner');
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions();
+    options.devDependencies = true;
 
     return gulp.src(config.specRunner)
         .pipe(wiredep(options))
@@ -264,7 +271,7 @@ function startTests(singleRun, done) {
     }
 }
 
-function serve(isDev) {
+function serve(isDev, specRunner) {
     var nodeOptions = {
         script: config.nodeServer,
         delayTime: 1,
@@ -287,7 +294,7 @@ function serve(isDev) {
         })
         .on('start', function () {
             log('*** nodemon started');
-            startBrowserSync(isDev);
+            startBrowserSync(isDev, specRunner);
         })
         .on('crash', function () {
             log('*** nodemon crashed: script crashed for some reason');
@@ -302,7 +309,7 @@ function changeEvent(event) {
     log('File ' + event.path.replace(srcPattern, '') + ' ' + event.type);
 }
 
-function startBrowserSync(isDev) {
+function startBrowserSync(isDev, specRunner) {
     if (args.nosync || browserSync.active) {
         return;
     }
@@ -341,6 +348,11 @@ function startBrowserSync(isDev) {
         notify: true,
         reloadDelay: 1000
     };
+
+    if (specRunner) {
+        options.startPath = config.specRunnerFile;
+    }
+
     browserSync(options);
 }
 
