@@ -131,7 +131,13 @@ gulp.task('build-specs', ['templatecache'], function() {
     log('building the spec runner');
     var wiredep = require('wiredep').stream;
     var options = config.getWiredepDefaultOptions();
+    var specs = config.specs;
+
     options.devDependencies = true;
+
+    if (args.startServers) {
+        specs = [].concat(specs, config.serverIntegrationSpecs);
+    }
 
     return gulp.src(config.specRunner)
         .pipe(wiredep(options))
@@ -142,7 +148,7 @@ gulp.task('build-specs', ['templatecache'], function() {
         .pipe($.inject(gulp.src(config.specHelpers), {
             name: 'inject:spechelpers',
         }))
-        .pipe($.inject(gulp.src(config.specs), {
+        .pipe($.inject(gulp.src(specs), {
             name: 'inject:specs',
         }))
          .pipe($.inject(gulp.src(config.temp + config.templateCache.file), {
