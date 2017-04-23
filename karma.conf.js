@@ -1,13 +1,30 @@
 module.exports = function(config) {
+    require('phantomjs-prebuilt').path = './node_modules/.bin/phantomjs';
     var gulpConfig = require('./gulp.config')();
 
     config.set({
+        urlRoot: '/_karma_/',
         // base path that will be used to resolve all patterns (eg. files, exclude)
         basePath: './',
 
         // frameworks to use
         // some available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['mocha', 'chai', 'sinon', 'chai-sinon'],
+        frameworks: [
+            'mocha',
+            'chai', 
+            'sinon'
+        ],
+
+        plugins: [
+            'karma-mocha', 
+            'karma-chai', 
+            'karma-sinon', 
+            'karma-chai-sinon', 
+            'karma-coverage', 
+            'karma-phantomjs-launcher', 
+            'karma-chrome-launcher', 
+            'karma-growl-reporter'
+        ],
 
         // list of files / patterns to load in the browser
         files: gulpConfig.karma.files,

@@ -2,8 +2,11 @@ module.exports = function() {
     var client ='./src/client/';
     var clientApp = client + 'app/';
     var temp = './.tmp/';
-    var server = './src/server/'
+    var server = './src/server/';
     var root = './';
+    var report = './report/';
+    var wiredep = require('wiredep');
+    var bowerFiles = wiredep({devDependencies: true})['js'];
 
     var config ={
         /**
@@ -30,6 +33,7 @@ module.exports = function() {
         server: server,
         temp: temp,
         root: root,
+        report: report,
         browserReloadDelay: 1000,
 
         /**
@@ -66,6 +70,12 @@ module.exports = function() {
         ],
 
         /**
+         * Karma and testing settings
+         */
+        serverIntegrationSpecs: [client + 'tests/server-integration/**/*.spec.js'],
+        specHelpers: [client + 'test-helpers/*.js'],
+
+        /**
          * Node settings
          */
         defaultPort: 7203,
@@ -77,9 +87,38 @@ module.exports = function() {
             bowerJson: config.bower.json,
             director: config.bower.directory,
             ignorePath: config.bower.ignorePath
-        }
+        };
         return options;
     };
 
+    config.karma = getKarmaOptions();
+
     return config;
+
+    ////////////////
+    function getKarmaOptions() {
+        var options = {
+            files: [].concat(
+                bowerFiles,
+                config.specHelpers,
+                client + '**/*.module.js',
+                client + '**/*.js',
+                temp + config.templateCache.file,
+                config.serverIntegrationSpecs
+            ),
+            exclude: [],
+            coverage: {
+                dir: report + 'coverage',
+                reporters: [
+                    {type: 'html', subdir: 'report-html'},
+                    {type: 'lcov', subdir: 'report-lcov'},
+                    {type: 'text-summary'}
+                ]
+            },
+            preprocessors: {}
+        };
+
+        options.preprocessors[clientApp + '**/!(*.spec)*(.js)'] = ['coverage'];
+        return options;
+    }
 };
