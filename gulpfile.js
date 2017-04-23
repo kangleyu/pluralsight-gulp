@@ -202,11 +202,24 @@ gulp.task('autotest', ['vet', 'templatecache'], function(done) {
 //////// help functions
 
 function startTests(singleRun, done) {
+    var child;
+    var fork = require('child_process').fork;
+
     var Server = require('karma').Server;
     var excludeFiles = [];
     var serverSpecs = config.serverIntegrationSpecs;
 
-    excludeFiles = serverSpecs;
+    if (args.startServers) { // gulp test --startServers
+        log('starting server');
+        var savedEnv = process.env;
+        savedEnv.NODE_ENV = 'dev';
+        savedEnv.PORT = 8888;
+        child = fork(config.nodeServer);
+    } else {
+        if (serverSpecs && serverSpecs.length) {
+             excludeFiles = serverSpecs;
+        }
+    }
 
     new Server({
         configFile: __dirname + '/karma.conf.js',
@@ -216,6 +229,10 @@ function startTests(singleRun, done) {
 
     function karmaCompleted(karmaResults) {
         log('Karma completed!');
+        if (child) {
+            log('shutting down the child process');
+            child.kill();
+        }
         if (karmaResults === 1) {
             done('karma: tests faield with code ' + karmaResults);
         } else {
