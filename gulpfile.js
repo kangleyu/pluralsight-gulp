@@ -121,6 +121,29 @@ gulp.task('build', ['optimize', 'images', 'fonts'], function() {
     notify(msg);
 });
 
+gulp.task('build-specs', ['templatecache'], function() {
+    log('building the spec runner');
+    var wiredep = require('wiredep').stream;
+    var options = config.getWiredepDefaultOptions();
+
+    return gulp.src(config.specRunner)
+        .pipe(wiredep(options))
+        .pipe($.inject(gulp.src(config.testlibraries), {
+            name: 'inject:testlibraries',
+        }))
+        .pipe($.inject(gulp.src(config.js)))
+        .pipe($.inject(gulp.src(config.specHelpers), {
+            name: 'inject:spechelpers',
+        }))
+        .pipe($.inject(gulp.src(config.specs), {
+            name: 'inject:specs',
+        }))
+         .pipe($.inject(gulp.src(config.temp + config.templateCache.file), {
+            name: 'inject:templates',
+        }))
+        .pipe(gulp.dest(config.client));
+});
+
 gulp.task('optimize', ['inject', 'test'], function () {
     log('Optimizing the javascripts, css, html');
 
